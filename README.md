@@ -63,17 +63,17 @@ human-in-the-loop interrupt/resume via checkpointing.
                                            +-> :hold               (:hard? true)
 ```
 
-- `src/teachers_aide/store.cljc` — `Store` protocol +
+- `src/teachers_aide/store.cljk` — `Store` protocol +
   `MemStore`: registered classrooms, committed records, an
   append-only audit ledger.
-- `src/teachers_aide/advisor.cljc` — `Advisor` protocol;
+- `src/teachers_aide/advisor.cljk` — `Advisor` protocol;
   `mock-advisor` (deterministic, default) proposes an assist or
   monitor operation from a request; `llm-advisor` wraps a
   `langchain.model/ChatModel` — either way the advisor only ever
   produces a `:propose`-effect proposal, never a committed record, and
   LLM parse failures always yield `confidence 0.0` (forces escalation,
   never fabricated confidence).
-- `src/teachers_aide/governor.cljc` —
+- `src/teachers_aide/governor.cljk` —
   `TeachersAideGovernor/check`: a pure function, wired as its own
   `:govern` node. Hard invariants (unregistered classroom, a proposal
   whose `:effect` isn't `:propose`) always route to `:hold`. Escalation
@@ -85,7 +85,7 @@ human-in-the-loop interrupt/resume via checkpointing.
   that direct one-on-one supervision of a minor without a lead teacher
   present, or a behavioral-incident response, always require human
   sign-off.
-- `src/teachers_aide/actor.cljc` — `build-graph`, `run-request!`,
+- `src/teachers_aide/actor.cljk` — `build-graph`, `run-request!`,
   `approve!`: the `langgraph.graph/state-graph` wiring itself.
 
 ```bash
