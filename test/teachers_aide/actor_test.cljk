@@ -1,5 +1,5 @@
 (ns teachers-aide.actor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [teachers-aide.actor :as actor]
             [teachers-aide.store :as store]))
 
