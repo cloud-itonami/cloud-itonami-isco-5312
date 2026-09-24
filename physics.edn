@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a classroom-support robot performs material
+;; setup and supervised activity-station assistance. Declared here: the
+;; class set of materials (textbooks / workbooks) carried from the resource
+;; room to the classroom, and an activity-station tray lifted from the cart
+;; onto a pupil's desk.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-5312"
+ :cases
+ [{:id :class-set-to-classroom
+   :kind :transport
+   :procedure "robot carries a class set of workbooks from the resource room to the classroom before the lesson"
+   :params {:mass-kg 40.0 :distance-m 70.0 :v-max-mps 1.0 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 60.0 :crr 0.02
+            :cog-height-m 0.60 :support-half-length-m 0.28}
+   :sweep {:param :payload-kg :values [5.0 15.0 30.0 50.0 80.0]}
+   :quantity :cycle-time-s
+   :limit {:max 80.0 :basis "estimate: the set arrives within the passing period between lessons (about 5 minutes including loading and hand-off)"}
+   :boundary {:lo 1.0 :hi 250.0}}
+  {:id :station-tray-to-desk
+   :kind :manipulator
+   :procedure "arm lifts an activity-station tray from the materials cart onto a pupil's desk, with the teacher present"
+   :params {:l1-m 0.40 :l2-m 0.35 :m1-kg 3.0 :m2-kg 2.0 :payload-kg 2.0
+            :from [0.35 0.00] :to [0.55 0.20] :steps 500}
+   :sweep {:param :duration-s :values [0.4 0.6 0.9 1.4 2.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 30.0 :basis "estimate: continuous shoulder torque of a ~3 kg-payload collaborative arm, kept low because pupils are near"}
+   :boundary {:lo 0.2 :hi 3.0}}]}
