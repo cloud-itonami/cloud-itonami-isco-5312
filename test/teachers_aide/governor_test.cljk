@@ -1,5 +1,5 @@
 (ns teachers-aide.governor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [teachers-aide.store :as store]
             [teachers-aide.governor :as governor]))
 
